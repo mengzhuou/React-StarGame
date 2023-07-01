@@ -34,44 +34,63 @@ class App extends React.Component<any,any> {
     this.state = {
       starNum: this.getRandomNum(1, 9),
       clickNum: 9,
-      availableNums: [1,2,3,4,5],
-      candidateNums: [2,3],
+      availableNums: [1,2,3,4,5,6,7,8,9],
+      candidateNums: [],
     }
   }
 
-  randomSum = () => {
-    //get random sum from availableNums, max sum is 9
+  //get random sum from availableNums, max sum is 9
+  starRandomSum = (tempAvailableNums: number[]) => {
+    const { availableNums } = this.state;
+    let sum = 0;
+    if(availableNums.length > 0){
+      
+      while (sum <= 9 && tempAvailableNums.length > 0) {
+        const randomIndex = Math.floor(Math.random() * tempAvailableNums.length);
+        const randomNum = tempAvailableNums[randomIndex];
+        if (sum+randomNum <= 9){
+          sum += randomNum;
+          tempAvailableNums.splice(randomIndex,1);
+        }
+        else break;
+      }
+      this.setState({ starNum: sum });
+    }
+    return null;
   }
 
   onNumberClick = (number: number, currentStatus: string) => {
-
-    
-    //if number is used, do nothing
-    if (!this.state.availableNums.includes(number)){
+    const {availableNums, candidateNums, starNum} = this.state;
+    if (!availableNums.includes(number)){
       return;
     }
     
     //is number is available, can either be added or removed to candidate
     const newCandidateNums = 
       currentStatus === 'available'? 
-        this.state.candidateNums.concat(number)
+        candidateNums.concat(number)
         :
-        //candidateNums remove number
-        this.state.candidateNums.filter((cn:any) => cn!== number);
+        candidateNums.filter((cn:any) => cn!== number);
         ;
     
-    
     //if the sum does not match, number will be added to candidate
-    if (this.sum(newCandidateNums) !== this.state.starNum){
+    if (this.sum(newCandidateNums) !== starNum){
       this.setState({ candidateNums: newCandidateNums })
     } else{
-      //if number matched, 
-      this.setState((prevState: any) => ({
-        //add number to candidateNum
-        candidateNums: [...prevState.candidateNums, number],
-        //delete number from availableNums
-        availableNums: prevState.availableNums.filter((num: number) => num !== number)
-      }))
+      this.setState((prevState: any) => {
+        const updateAvailableNums = prevState.availableNums.filter((num: number) => num !== number);
+        return {
+          candidateNums: [],
+          availableNums: updateAvailableNums
+        }
+      },
+      () => 
+        {
+          //this is a call back function. Reason I use it is because
+          // setState is asynchronous, thus method before it can't be immediately reflected 
+          this.starRandomSum(availableNums);
+        }
+      );
     }
   }
 
