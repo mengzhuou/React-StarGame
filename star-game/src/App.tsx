@@ -28,6 +28,14 @@ const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus, onClick }) 
   )
 }
 
+const PlayAgain: React.FC<{onClick: () => void}> = ({onClick}) => {
+  return(
+    <div className='gameDone'>
+      <button onClick={onClick}>Play Again</button>
+    </div>
+  )
+}
+
 class App extends React.Component<any,any> {
   constructor(props:any){
     super(props);
@@ -36,15 +44,26 @@ class App extends React.Component<any,any> {
       clickNum: 9,
       availableNums: [1,2,3,4,5,6,7,8,9],
       candidateNums: [],
+      isGameDone: false
     }
   }
 
-  //get random sum from availableNums, max sum is 9
+  resetGame = () => {
+    this.setState({  
+      availableNums: [1,2,3,4,5,6,7,8,9],
+      candidateNums: [],
+      isGameDone: false
+    })
+  }
+
   starRandomSum = () => {
     const { availableNums } = this.state;
     let sum = 0;
-    console.log("tempAvailableNums before:")
     const tempAvailableNums = [...availableNums]
+    if(tempAvailableNums.length === 0) {
+      this.setState({ isGameDone: true });
+      return null;
+    }
     if(availableNums.length > 0){
       while (sum <= 9 && tempAvailableNums.length > 0) {
         const randomIndex = Math.floor(Math.random() * tempAvailableNums.length);
@@ -57,7 +76,6 @@ class App extends React.Component<any,any> {
           tempAvailableNums.splice(randomIndex,1);
           console.log("sum:", sum);
           console.log("tempAvailableNums", tempAvailableNums);
-          
         }
         else break;
       }
@@ -98,7 +116,7 @@ class App extends React.Component<any,any> {
         // add a delay to allow the UI to update
         setTimeout(() => {
           this.starRandomSum();
-          this.setState({ candidateNums: [] });
+          this.setState({ candidateNums: []});
         }, 100);
       }
       );
@@ -136,23 +154,32 @@ class App extends React.Component<any,any> {
   }
 
   render() {
-    const { starNum, clickNum } = this.state;
+    const { starNum, clickNum, availableNums, isGameDone } = this.state;
+
     return (
       <div className="App">
         <div className="App-header">
           <div className='gameBody'>
             <div className='left'>
-              <div className='grid'>
-                {this.starRange(1, starNum).map((index)=>(
-                  <span
-                    key={index}
-                  >
-                    <div className='star'>
-                      &#9733;
-                    </div>
-                  </span>
-                ))}
-              </div>
+              {isGameDone ? (
+                <PlayAgain 
+                  onClick={this.resetGame}
+                />
+              ) : (
+                <div className='grid'>
+                  {this.starRange(1, starNum).map((index)=>(
+                    <span
+                      key={index}
+                    >
+                      <div className='star'>
+                        &#9733;
+                      </div>
+                    </span>
+                  ))}
+                </div>
+              )
+            }
+
             </div>
             <div className='right'>
               <div className='grid'>
