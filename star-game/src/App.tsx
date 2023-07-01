@@ -72,24 +72,27 @@ class App extends React.Component<any,any> {
         :
         candidateNums.filter((cn:any) => cn!== number);
         ;
-    
-    //if the sum does not match, number will be added to candidate
     if (this.sum(newCandidateNums) !== starNum){
       this.setState({ candidateNums: newCandidateNums })
     } else{
       this.setState((prevState: any) => {
-        const updateAvailableNums = prevState.availableNums.filter((num: number) => num !== number);
+        //all candidateNum are removed from availableNums
+        const updateAvailableNums = prevState.availableNums.filter(
+          (num: number) => !newCandidateNums.includes(num)
+        );
         return {
-          candidateNums: [],
+          candidateNums: newCandidateNums,
           availableNums: updateAvailableNums
         }
       },
       () => 
-        {
-          //this is a call back function. Reason I use it is because
-          // setState is asynchronous, thus method before it can't be immediately reflected 
+      {
+        // add a delay to allow the UI to update
+        setTimeout(() => {
           this.starRandomSum(availableNums);
-        }
+          this.setState({ candidateNums: [] });
+        }, 100);
+      }
       );
     }
   }
