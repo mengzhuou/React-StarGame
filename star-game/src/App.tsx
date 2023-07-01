@@ -40,20 +40,28 @@ class App extends React.Component<any,any> {
   }
 
   //get random sum from availableNums, max sum is 9
-  starRandomSum = (tempAvailableNums: number[]) => {
+  starRandomSum = () => {
     const { availableNums } = this.state;
     let sum = 0;
+    console.log("tempAvailableNums before:")
+    const tempAvailableNums = [...availableNums]
     if(availableNums.length > 0){
-      
       while (sum <= 9 && tempAvailableNums.length > 0) {
         const randomIndex = Math.floor(Math.random() * tempAvailableNums.length);
+        console.log("randomIndex: ", randomIndex)
+        
         const randomNum = tempAvailableNums[randomIndex];
+        console.log("randomNum", randomNum);
         if (sum+randomNum <= 9){
           sum += randomNum;
           tempAvailableNums.splice(randomIndex,1);
+          console.log("sum:", sum);
+          console.log("tempAvailableNums", tempAvailableNums);
+          
         }
         else break;
       }
+      console.log("sum after", sum);
       this.setState({ starNum: sum });
     }
     return null;
@@ -89,7 +97,7 @@ class App extends React.Component<any,any> {
       {
         // add a delay to allow the UI to update
         setTimeout(() => {
-          this.starRandomSum(availableNums);
+          this.starRandomSum();
           this.setState({ candidateNums: [] });
         }, 100);
       }
