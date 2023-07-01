@@ -59,6 +59,7 @@
 
 .gameDone{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -79,4 +80,18 @@
 .gameDone button:hover{
   background-color: #88a5df;
   color: white;
+}
+
+.isWin{
+  font-size: 2em;
+  margin-bottom: 2em;  
+  font-family: 'Courier New', Courier, monospace; 
+  color: #FFD700;
+}
+
+.resultMessage {
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -28,9 +28,16 @@ const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus, onClick }) 
   )
 }
 
-const PlayAgain: React.FC<{onClick: () => void}> = ({onClick}) => {
+const PlayAgain: React.FC<{onClick: () => void, isWin:any, isGameDone:any}> = ({onClick, isWin, isGameDone}) => {
   return(
     <div className='gameDone'>
+      <div className='resultMessage'>
+        {isWin && isGameDone ? (
+          <p className='isWin'>You Win !!!</p>
+        ):(
+          <p className='isWin'>You Lose</p>
+        )} 
+      </div>
       <button onClick={onClick}>Play Again</button>
     </div>
   )
@@ -73,6 +80,17 @@ class App extends React.Component<any,any> {
         this.timerID = null;
       }
   }
+
+  checkWin = () => {
+    if(this.state.availableNums.length === 0) {
+      this.setState({ isGameDone: true, isWin: true });
+      if(this.timerID){
+        clearInterval(this.timerID);
+        this.timerID = null;
+      }
+    }
+  }
+
   resetGame = () => {
     window.location.reload();
   }
@@ -138,6 +156,7 @@ class App extends React.Component<any,any> {
         setTimeout(() => {
           this.starRandomSum();
           this.setState({ candidateNums: []});
+          this.checkWin();
         }, 100);
       }
       );
@@ -175,7 +194,7 @@ class App extends React.Component<any,any> {
   }
 
   render() {
-    const { starNum, clickNum, secondLeft, isGameDone } = this.state;
+    const { starNum, clickNum, secondLeft, isGameDone, isWin } = this.state;
 
     return (
       <div className="App">
@@ -186,6 +205,8 @@ class App extends React.Component<any,any> {
               {isGameDone ? (
                 <PlayAgain 
                   onClick={this.resetGame}
+                  isWin={isWin}
+                  isGameDone={isGameDone}
                 />
               ) : (
                 <div className='grid'>
