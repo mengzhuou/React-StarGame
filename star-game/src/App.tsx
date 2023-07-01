@@ -44,16 +44,37 @@ class App extends React.Component<any,any> {
       clickNum: 9,
       availableNums: [1,2,3,4,5,6,7,8,9],
       candidateNums: [],
-      isGameDone: false
+      isGameDone: false,
+      secondLeft: 10,
+      isWin: false
     }
   }
+  
+  timerID: NodeJS.Timeout | null = null;
+  timer = () => {
+    if (this.state.secondLeft > 0){
+      this.setState({ secondLeft: this.state.secondLeft-1})
+    } else{
+      this.setState({ isGameDone: true })
+      if(this.timerID){
+        clearInterval(this.timerID);
+        this.timerID = null;
+      }
+    }
+  }
+  
+  componentDidMount(): void {
+    this.timerID = setInterval(() => this.timer(), 1000);
+  }
 
+  componentWillUnmount(): void {
+      if(this.timerID){
+        clearInterval(this.timerID);
+        this.timerID = null;
+      }
+  }
   resetGame = () => {
-    this.setState({  
-      availableNums: [1,2,3,4,5,6,7,8,9],
-      candidateNums: [],
-      isGameDone: false
-    })
+    window.location.reload();
   }
 
   starRandomSum = () => {
@@ -154,7 +175,7 @@ class App extends React.Component<any,any> {
   }
 
   render() {
-    const { starNum, clickNum, availableNums, isGameDone } = this.state;
+    const { starNum, clickNum, secondLeft, isGameDone } = this.state;
 
     return (
       <div className="App">
@@ -195,6 +216,8 @@ class App extends React.Component<any,any> {
               </div>
             </div>
           </div>
+          <p className='timer'>Time Remaining: {secondLeft}</p>
+
         </div>
     </div>
     );
