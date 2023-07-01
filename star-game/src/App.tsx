@@ -14,15 +14,21 @@ class App extends React.Component<any,any> {
     return Array.from({ length: max - min + 1 }, (_, i) => min + i);
   }
 
+  getRandomNum(min: number, max: number): number {
+    return Math.floor(Math.random() * (max-min+1))+min;
+  }
+
   render() {
     const { starNum, clickNum } = this.state;
+
+    const randomStarNum = this.getRandomNum(1, starNum);
     return (
       <div className="App">
         <div className="App-header">
           <div className='gameBody'>
             <div className='left'>
               <div className='grid'>
-                {this.starRange(1, starNum).map((index)=>(
+                {this.starRange(1, randomStarNum).map((index)=>(
                   <span
                     key={index}
                   >
