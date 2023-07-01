@@ -159,6 +159,7 @@ class App extends React.Component<any,any> {
     return (
       <div className="App">
         <div className="App-header">
+          <p>Pick 1 or more numbers that sum to the number of stars</p>
           <div className='gameBody'>
             <div className='left'>
               {isGameDone ? (

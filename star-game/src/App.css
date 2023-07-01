@@ -20,8 +20,9 @@
 
 .left{
   text-align: center;
-  width: 50%;
-  border: thin solid #ddd;
+  width: 300px;
+  height: 300px;
+  border: thin solid #ddd;  
 }
 
 .grid {
@@ -33,8 +34,8 @@
 
 .right{
   text-align: center;
-  padding: 10px;
-  width: 50%;
+  width: 300px;
+  height: 300px;
   border: thin solid #ddd;
 }
 
@@ -51,7 +52,31 @@
   border: thin solid #ddd;
   width: 45px;
   height: 45px;
-  margin: 10px;
+  margin: 15px;
   font-size: 25px;
   cursor: pointer;
+}
+
+.gameDone{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.gameDone button{
+  padding: 10px 20px;
+  font-size: 1.5em;
+  color: #88a5df;
+  background-color: white;
+  border: 2px solid #88a5df;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gameDone button:hover{
+  background-color: #88a5df;
+  color: white;
 }
