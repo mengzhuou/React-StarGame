@@ -5,7 +5,7 @@ class App extends React.Component<any,any> {
   constructor(props:any){
     super(props);
     this.state = {
-      starNum: 9,
+      starNum: this.getRandomNum(1, 9),
       clickNum: 9
     }
   }
@@ -20,15 +20,13 @@ class App extends React.Component<any,any> {
 
   render() {
     const { starNum, clickNum } = this.state;
-
-    const randomStarNum = this.getRandomNum(1, starNum);
     return (
       <div className="App">
         <div className="App-header">
           <div className='gameBody'>
             <div className='left'>
               <div className='grid'>
-                {this.starRange(1, randomStarNum).map((index)=>(
+                {this.starRange(1, starNum).map((index)=>(
                   <span
                     key={index}
                   >
