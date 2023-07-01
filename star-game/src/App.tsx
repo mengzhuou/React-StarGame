@@ -1,12 +1,28 @@
 import './App.css';
 import React from "react";
 
+interface PlayNumberProps {
+  playNum: number;
+}
+
+const PlayNumber: React.FC<PlayNumberProps> = ({ playNum }) => {
+  return (
+    <span>
+      <button className='number'>
+        {playNum}
+      </button>
+    </span>
+  )
+}
+
 class App extends React.Component<any,any> {
   constructor(props:any){
     super(props);
     this.state = {
       starNum: this.getRandomNum(1, 9),
-      clickNum: 9
+      clickNum: 9,
+      availableNums: [1,2,3,4,5],
+      candidateNums: [2,3]
     }
   }
 
@@ -40,13 +56,7 @@ class App extends React.Component<any,any> {
             <div className='right'>
               <div className='grid'>
                 {this.starRange(1, clickNum).map((index)=>(
-                  <span
-                  key={index}
-                >
-                  <button className='number'>
-                    {index}
-                  </button>
-                </span>
+                  <PlayNumber key={index} playNum={index}/>
                 ))}
               </div>
             </div>
