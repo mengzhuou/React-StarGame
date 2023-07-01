@@ -4,6 +4,7 @@ import React from "react";
 interface PlayNumberProps {
   playNum: number;
   numStatus: string;
+  onClick: (number: number, currentStatus: string) => void;
 }
 
 const colors = {
@@ -13,13 +14,13 @@ const colors = {
   candidate: 'deepskyblue',
 };
 
-const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus }) => {
+const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus, onClick }) => {
   return (
     <span>
       <button 
         className='number'
         style={{ backgroundColor: colors[numStatus as keyof typeof colors] }}
-        onClick={()=>console.log("Num click", playNum)}
+        onClick={()=> onClick(playNum, numStatus)}
       >
         {playNum}
       </button>
@@ -35,6 +36,42 @@ class App extends React.Component<any,any> {
       clickNum: 9,
       availableNums: [1,2,3,4,5],
       candidateNums: [2,3],
+    }
+  }
+
+  randomSum = () => {
+    //get random sum from availableNums, max sum is 9
+  }
+
+  onNumberClick = (number: number, currentStatus: string) => {
+
+    
+    //if number is used, do nothing
+    if (!this.state.availableNums.includes(number)){
+      return;
+    }
+    
+    //is number is available, can either be added or removed to candidate
+    const newCandidateNums = 
+      currentStatus === 'available'? 
+        this.state.candidateNums.concat(number)
+        :
+        //candidateNums remove number
+        this.state.candidateNums.filter((cn:any) => cn!== number);
+        ;
+    
+    
+    //if the sum does not match, number will be added to candidate
+    if (this.sum(newCandidateNums) !== this.state.starNum){
+      this.setState({ candidateNums: newCandidateNums })
+    } else{
+      //if number matched, 
+      this.setState((prevState: any) => ({
+        //add number to candidateNum
+        candidateNums: [...prevState.candidateNums, number],
+        //delete number from availableNums
+        availableNums: prevState.availableNums.filter((num: number) => num !== number)
+      }))
     }
   }
 
@@ -94,6 +131,7 @@ class App extends React.Component<any,any> {
                     key={index} 
                     playNum={index}
                     numStatus={this.numberStatus(index)}
+                    onClick={this.onNumberClick}
                     />
                 ))}
               </div>
