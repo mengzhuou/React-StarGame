@@ -6,6 +6,7 @@ interface PlayNumberProps {
   playNum: number;
   numStatus: string;
   onClick: (number: number, currentStatus: string) => void;
+  isGameDone: boolean;
 }
 
 const colors = {
@@ -15,13 +16,14 @@ const colors = {
   candidate: 'deepskyblue',
 };
 
-const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus, onClick }) => {
+const PlayNumber: React.FC<PlayNumberProps> = ({ playNum, numStatus, onClick, isGameDone }) => {
   return (
     <span>
       <button 
         className='number'
         style={{ backgroundColor: colors[numStatus as keyof typeof colors] }}
         onClick={()=> onClick(playNum, numStatus)}
+        disabled={isGameDone}
       >
         {playNum}
       </button>
@@ -233,6 +235,7 @@ class App extends React.Component<any,any> {
                     playNum={index}
                     numStatus={this.numberStatus(index)}
                     onClick={this.onNumberClick}
+                    isGameDone={isGameDone}
                     />
                 ))}
               </div>

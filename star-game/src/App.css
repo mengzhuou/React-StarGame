@@ -106,20 +106,21 @@
   }
   .grid {
     grid-template-columns: repeat(3, 1fr);
+    margin-top: 50px;
   }
 
   .star {
     margin: 5px 7px;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 45px;
   }
 
   .number {
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     margin: 8px;
-    font-size: 15px;
+    font-size: 30px;
   }
 
   .App-header {
@@ -129,6 +130,10 @@
 
   .gameDone button{
     margin-bottom: 15px;
+  }
+
+  .timer{
+    font-size: 30px;
   }
 }
 
