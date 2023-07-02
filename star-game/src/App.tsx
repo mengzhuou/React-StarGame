@@ -1,5 +1,7 @@
 import './App.css';
 import React from "react";
+import './image/portfolio.png';
+
 
 
 interface PlayNumberProps {
@@ -244,6 +246,14 @@ class App extends React.Component<any,any> {
           <p className='timer'>Time Remaining: {secondLeft}</p>
 
         </div>
+        <footer>
+          <div className="footer-text">
+            Designed with &#10084; by Mengzhu Ou 
+          </div>
+          <div className="footer-find-me">
+            <a href="https://mengzhuou.github.io/">Find Me</a>
+          </div>
+        </footer>
     </div>
     );
   }
