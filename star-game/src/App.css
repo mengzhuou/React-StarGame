@@ -121,6 +121,7 @@
     height: 40px;
     margin: 8px;
     font-size: 30px;
+    text-align: center;
   }
 
   .App-header {
@@ -134,6 +135,10 @@
 
   .timer{
     font-size: 30px;
+  }
+
+  .isWin{
+    font-size: 3em;
   }
 }
 
