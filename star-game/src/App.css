@@ -52,9 +52,11 @@
   border: thin solid #ddd;
   width: 45px;
   height: 45px;
-  margin: 15px;
+  margin-top: 15px;
   font-size: 25px;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
 }
 
 .gameDone{
@@ -119,9 +121,10 @@
   .number {
     width: 40px;
     height: 40px;
-    margin: 8px;
     font-size: 30px;
     text-align: center;
+    align-items: center;
+    justify-content: center;
   }
 
   .App-header {
@@ -139,11 +142,5 @@
 
   .isWin{
     font-size: 3em;
-  }
-}
-
-@media (max-width: 400px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
