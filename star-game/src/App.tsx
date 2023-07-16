@@ -200,10 +200,13 @@ class App extends React.Component<any,any> {
 
   render() {
     const { starNum, clickNum, secondLeft, isGameDone, isWin } = this.state;
-
     return (
       <div className="App">
         <div className="App-header">
+        <head>
+          {<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6038499387704621"
+            crossOrigin="anonymous"></script>}
+        </head>
           <p>Pick 1 or more numbers that sum to the number of stars</p>
           <div className='gameBody'>
             <div className='left'>
